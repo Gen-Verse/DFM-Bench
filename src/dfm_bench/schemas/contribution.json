@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dfm-bench.local/schemas/v1/contribution",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "candidate_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "contribution_type": {
+      "type": "string",
+      "enum": [
+        "problem",
+        "hypothesis",
+        "design",
+        "measurement_finding",
+        "empirical_result"
+      ]
+    },
+    "evidence_maturity": {
+      "type": "string",
+      "enum": [
+        "proposed",
+        "source_grounded",
+        "diagnostically_examined",
+        "study_completed",
+        "independently_checked"
+      ]
+    },
+    "disposition": {
+      "type": "string",
+      "enum": [
+        "supported",
+        "contradicted",
+        "inconclusive",
+        "unresolved"
+      ]
+    },
+    "exposure": {
+      "type": "string",
+      "enum": [
+        "observed",
+        "uncertain",
+        "independently_assessed"
+      ]
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "importance": {
+      "type": [
+        "number",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "candidate_ids",
+    "contribution_type",
+    "evidence_maturity",
+    "disposition",
+    "exposure",
+    "evidence_refs",
+    "importance"
+  ],
+  "additionalProperties": false
+}

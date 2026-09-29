@@ -1,0 +1,701 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dfm-bench.local/schemas/v1/run_snapshot",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": [
+        "1.0"
+      ]
+    },
+    "package_version": {
+      "type": "string"
+    },
+    "source": {
+      "type": "object"
+    },
+    "campaign": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "domain": {
+          "type": "string",
+          "enum": [
+            "clinical",
+            "battery"
+          ]
+        },
+        "hypothesis_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "decision_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "open",
+            "quiescent_unclosed",
+            "closed",
+            "unknown"
+          ]
+        },
+        "end_reason": {
+          "type": "string",
+          "enum": [
+            "operator_stopped",
+            "planned_completion",
+            "budget_exhaustion",
+            "early_termination",
+            "unknown"
+          ]
+        },
+        "review_coverage": {
+          "type": "string",
+          "enum": [
+            "not_reviewed",
+            "complete",
+            "partial",
+            "unscorable"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "domain",
+        "hypothesis_ids",
+        "decision_ids",
+        "status",
+        "end_reason",
+        "review_coverage"
+      ],
+      "additionalProperties": false
+    },
+    "hypotheses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "source_id": {
+            "type": "string"
+          },
+          "episode_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "domain": {
+            "type": "string",
+            "enum": [
+              "clinical",
+              "battery"
+            ]
+          },
+          "dataset": {
+            "type": "string"
+          },
+          "proposal": {
+            "type": "string"
+          },
+          "change_note": {
+            "type": "string"
+          },
+          "parents": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "imported_seed": {
+            "type": "boolean"
+          },
+          "created_at": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "content_hash": {
+            "type": "string"
+          },
+          "artifact_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "scientific_assessment": {
+            "type": [
+              "object",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "source_id",
+          "episode_id",
+          "domain",
+          "dataset",
+          "proposal",
+          "change_note",
+          "parents",
+          "imported_seed",
+          "created_at",
+          "content_hash",
+          "artifact_refs",
+          "scientific_assessment"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "parent_id": {
+            "type": "string"
+          },
+          "child_id": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "derivation"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "parent_id",
+          "child_id",
+          "kind"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "episode_id": {
+            "type": "string"
+          },
+          "operation": {
+            "type": "string"
+          },
+          "time": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "parents": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "context_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "goal": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "provenance": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "id",
+          "episode_id",
+          "operation",
+          "time",
+          "parents",
+          "context_ids",
+          "goal",
+          "reason",
+          "provenance"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "episodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "source_id": {
+            "type": "string"
+          },
+          "dataset": {
+            "type": "string"
+          },
+          "ordinal": {
+            "type": "integer"
+          },
+          "closed_at": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "selected_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "outcome": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "source_id",
+          "dataset",
+          "ordinal",
+          "closed_at",
+          "selected_id",
+          "outcome"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "delivery": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "source_id": {
+            "type": "string"
+          },
+          "job_id": {
+            "type": "string"
+          },
+          "episode_id": {
+            "type": "string"
+          },
+          "candidate_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "record_type": {
+            "type": "string",
+            "enum": [
+              "job",
+              "attempt"
+            ]
+          },
+          "stage": {
+            "type": "string",
+            "enum": [
+              "compile",
+              "validate",
+              "science",
+              "compute",
+              "other"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "not_attempted",
+              "pending",
+              "passed",
+              "failed",
+              "blocked",
+              "cancelled",
+              "not_applicable",
+              "unknown"
+            ]
+          },
+          "source_state": {
+            "type": "string"
+          },
+          "attempt_number": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "started_at": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "ended_at": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "created_at": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "package_version": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "evidence": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "id",
+          "source_id",
+          "job_id",
+          "episode_id",
+          "candidate_id",
+          "record_type",
+          "stage",
+          "status",
+          "source_state",
+          "attempt_number",
+          "started_at",
+          "ended_at",
+          "created_at",
+          "package_version",
+          "evidence"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "candidate_id",
+          "source_sha256",
+          "source_path",
+          "status",
+          "reason"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "candidate_id": {
+            "type": "string"
+          },
+          "source_sha256": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "source_path": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "unavailable",
+              "dataset_binding",
+              "frozen_private"
+            ]
+          },
+          "reason": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "relative_path": {
+            "type": "string"
+          },
+          "bytes": {
+            "type": "integer"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "trajectories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "path_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "context_parent_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "scope": {
+            "type": "string",
+            "enum": [
+              "full_path",
+              "segment"
+            ]
+          },
+          "decision_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "path_ids",
+          "context_parent_ids",
+          "scope",
+          "decision_ids",
+          "evidence_refs"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "contributions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "candidate_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "contribution_type": {
+            "type": "string",
+            "enum": [
+              "problem",
+              "hypothesis",
+              "design",
+              "measurement_finding",
+              "empirical_result"
+            ]
+          },
+          "evidence_maturity": {
+            "type": "string",
+            "enum": [
+              "proposed",
+              "source_grounded",
+              "diagnostically_examined",
+              "study_completed",
+              "independently_checked"
+            ]
+          },
+          "disposition": {
+            "type": "string",
+            "enum": [
+              "supported",
+              "contradicted",
+              "inconclusive",
+              "unresolved"
+            ]
+          },
+          "exposure": {
+            "type": "string",
+            "enum": [
+              "observed",
+              "uncertain",
+              "independently_assessed"
+            ]
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "importance": {
+            "type": [
+              "number",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "candidate_ids",
+          "contribution_type",
+          "evidence_maturity",
+          "disposition",
+          "exposure",
+          "evidence_refs",
+          "importance"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "reviews": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "level": {
+            "type": "string",
+            "enum": [
+              "hypothesis",
+              "transition",
+              "trajectory",
+              "campaign",
+              "discovery"
+            ]
+          },
+          "object_id": {
+            "type": "string"
+          },
+          "snapshot_id": {
+            "type": "string"
+          },
+          "rubric_id": {
+            "type": "string"
+          },
+          "rubric_sha256": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "complete",
+              "partial",
+              "unscorable"
+            ]
+          },
+          "dimensions": {
+            "type": "object"
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "composite": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "feedback_use": {
+            "type": "string",
+            "enum": [
+              "development",
+              "held_out"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "level",
+          "object_id",
+          "snapshot_id",
+          "rubric_id",
+          "rubric_sha256",
+          "status",
+          "dimensions",
+          "evidence_refs",
+          "composite",
+          "feedback_use"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "rubrics": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "graph": {
+      "type": "object"
+    },
+    "accounting": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema_version",
+    "package_version",
+    "source",
+    "campaign",
+    "hypotheses",
+    "edges",
+    "decisions",
+    "episodes",
+    "delivery",
+    "artifacts",
+    "trajectories",
+    "contributions",
+    "reviews",
+    "rubrics",
+    "graph",
+    "accounting"
+  ],
+  "additionalProperties": false
+}

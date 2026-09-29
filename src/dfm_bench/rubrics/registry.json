@@ -1,0 +1,86 @@
+[
+  {
+    "domain": "clinical",
+    "level": "trajectory",
+    "rubric_id": "clinical-trajectory-v1.0",
+    "sha256": "38b3852e15b37f54052261b776f6d031d8476470210f9c05557d6e83cdd2f917",
+    "path": "clinical/trajectory-rubric.md",
+    "weights": [
+      5,
+      30,
+      20,
+      20,
+      10,
+      10,
+      5
+    ],
+    "calibration_status": "pending_human_calibration",
+    "provenance": {
+      "archive_path": "/data_storage/yl_test/zjy/ehr-hypothesis-harness-agent-led/releases/thin-v0.7.0-20260922/dist/ehr_hypothesis_harness_thin-0.7.0-py3-none-any.whl",
+      "member": "ehr_thin/plugin/rubrics/trajectory-rubric.md",
+      "archive_sha256": "94042bb66fa0df053a799bbb844d38b9c4b8214668a74028469da1327696c84e"
+    }
+  },
+  {
+    "domain": "clinical",
+    "level": "campaign",
+    "rubric_id": "clinical-tree-v1.0",
+    "sha256": "b6dbd21b7c85d94da37367138aaaa2a9e0022770be4cfa34c955dd0730632a6f",
+    "path": "clinical/tree-rubric.md",
+    "weights": [
+      25,
+      15,
+      15,
+      20,
+      10,
+      10,
+      5
+    ],
+    "calibration_status": "pending_human_calibration",
+    "provenance": {
+      "archive_path": "/data_storage/yl_test/zjy/ehr-hypothesis-harness-agent-led/releases/thin-v0.7.0-20260922/dist/ehr_hypothesis_harness_thin-0.7.0-py3-none-any.whl",
+      "member": "ehr_thin/plugin/rubrics/tree-rubric.md",
+      "archive_sha256": "94042bb66fa0df053a799bbb844d38b9c4b8214668a74028469da1327696c84e"
+    }
+  },
+  {
+    "domain": "battery",
+    "level": "trajectory",
+    "rubric_id": "battery-trajectory-v1.0",
+    "sha256": "6f40ef17d4a9d9b803d639f226b3a0514d714a35a93cb84dcf9caf7abe24fddd",
+    "path": "battery/trajectory-rubric.md",
+    "weights": [
+      5,
+      30,
+      20,
+      20,
+      10,
+      10,
+      5
+    ],
+    "calibration_status": "pending_human_calibration",
+    "provenance": {
+      "source_path": "/data_storage/yl_test/zjy/battery-hypothesis-discovery-agent/releases/diagnostics-v3-0.7.3/plugin/rubrics/trajectory-rubric.md"
+    }
+  },
+  {
+    "domain": "battery",
+    "level": "campaign",
+    "rubric_id": "battery-tree-v1.0",
+    "sha256": "ba8fe25c46c555719af094846c33ed2caa6d01611eeb3a08b5519a15b2c331da",
+    "path": "battery/tree-rubric.md",
+    "weights": [
+      25,
+      15,
+      15,
+      20,
+      10,
+      10,
+      5
+    ],
+    "calibration_status": "pending_human_calibration",
+    "provenance": {
+      "source_path": "/data_storage/yl_test/zjy/battery-hypothesis-discovery-agent/releases/diagnostics-v3-0.7.3/plugin/rubrics/tree-rubric.md"
+    }
+  }
+]

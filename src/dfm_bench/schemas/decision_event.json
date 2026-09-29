@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dfm-bench.local/schemas/v1/decision_event",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "episode_id": {
+      "type": "string"
+    },
+    "operation": {
+      "type": "string"
+    },
+    "time": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "parents": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "context_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "goal": {
+      "type": "string"
+    },
+    "reason": {
+      "type": "string"
+    },
+    "provenance": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "id",
+    "episode_id",
+    "operation",
+    "time",
+    "parents",
+    "context_ids",
+    "goal",
+    "reason",
+    "provenance"
+  ],
+  "additionalProperties": false
+}

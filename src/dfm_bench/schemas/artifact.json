@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dfm-bench.local/schemas/v1/artifact",
+  "type": "object",
+  "required": [
+    "id",
+    "candidate_id",
+    "source_sha256",
+    "source_path",
+    "status",
+    "reason"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "candidate_id": {
+      "type": "string"
+    },
+    "source_sha256": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "unavailable",
+        "dataset_binding",
+        "frozen_private"
+      ]
+    },
+    "reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "relative_path": {
+      "type": "string"
+    },
+    "bytes": {
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false
+}

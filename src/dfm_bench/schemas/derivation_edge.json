@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dfm-bench.local/schemas/v1/derivation_edge",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "parent_id": {
+      "type": "string"
+    },
+    "child_id": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "derivation"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "parent_id",
+    "child_id",
+    "kind"
+  ],
+  "additionalProperties": false
+}

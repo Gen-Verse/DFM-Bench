@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dfm-bench.local/schemas/v1/review",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "level": {
+      "type": "string",
+      "enum": [
+        "hypothesis",
+        "transition",
+        "trajectory",
+        "campaign",
+        "discovery"
+      ]
+    },
+    "object_id": {
+      "type": "string"
+    },
+    "snapshot_id": {
+      "type": "string"
+    },
+    "rubric_id": {
+      "type": "string"
+    },
+    "rubric_sha256": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "complete",
+        "partial",
+        "unscorable"
+      ]
+    },
+    "dimensions": {
+      "type": "object"
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "composite": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "feedback_use": {
+      "type": "string",
+      "enum": [
+        "development",
+        "held_out"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "level",
+    "object_id",
+    "snapshot_id",
+    "rubric_id",
+    "rubric_sha256",
+    "status",
+    "dimensions",
+    "evidence_refs",
+    "composite",
+    "feedback_use"
+  ],
+  "additionalProperties": false
+}

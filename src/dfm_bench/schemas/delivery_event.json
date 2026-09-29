@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dfm-bench.local/schemas/v1/delivery_event",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "job_id": {
+      "type": "string"
+    },
+    "episode_id": {
+      "type": "string"
+    },
+    "candidate_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "record_type": {
+      "type": "string",
+      "enum": [
+        "job",
+        "attempt"
+      ]
+    },
+    "stage": {
+      "type": "string",
+      "enum": [
+        "compile",
+        "validate",
+        "science",
+        "compute",
+        "other"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "not_attempted",
+        "pending",
+        "passed",
+        "failed",
+        "blocked",
+        "cancelled",
+        "not_applicable",
+        "unknown"
+      ]
+    },
+    "source_state": {
+      "type": "string"
+    },
+    "attempt_number": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "started_at": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "ended_at": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "created_at": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "package_version": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "evidence": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "id",
+    "source_id",
+    "job_id",
+    "episode_id",
+    "candidate_id",
+    "record_type",
+    "stage",
+    "status",
+    "source_state",
+    "attempt_number",
+    "started_at",
+    "ended_at",
+    "created_at",
+    "package_version",
+    "evidence"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dfm-bench.local/schemas/v1/trajectory",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "path_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "context_parent_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "scope": {
+      "type": "string",
+      "enum": [
+        "full_path",
+        "segment"
+      ]
+    },
+    "decision_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "id",
+    "path_ids",
+    "context_parent_ids",
+    "scope",
+    "decision_ids",
+    "evidence_refs"
+  ],
+  "additionalProperties": false
+}

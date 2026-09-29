@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dfm-bench.local/schemas/v1/hypothesis",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "episode_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "domain": {
+      "type": "string",
+      "enum": [
+        "clinical",
+        "battery"
+      ]
+    },
+    "dataset": {
+      "type": "string"
+    },
+    "proposal": {
+      "type": "string"
+    },
+    "change_note": {
+      "type": "string"
+    },
+    "parents": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "imported_seed": {
+      "type": "boolean"
+    },
+    "created_at": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "content_hash": {
+      "type": "string"
+    },
+    "artifact_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "scientific_assessment": {
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "source_id",
+    "episode_id",
+    "domain",
+    "dataset",
+    "proposal",
+    "change_note",
+    "parents",
+    "imported_seed",
+    "created_at",
+    "content_hash",
+    "artifact_refs",
+    "scientific_assessment"
+  ],
+  "additionalProperties": false
+}

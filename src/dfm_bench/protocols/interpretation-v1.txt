@@ -1,0 +1,10 @@
+Additional v1 interpretation rules, developed by AI role reviewers; not human gold:
+1. Importance measures the consequence of resolving the question, independently of positive/negative direction or completed execution. A rigorous negative result or infeasibility closure can be consequential; quantify its scope. Do not treat small or null predictive gains alone as low scientific importance.
+2. Novelty is relative to supplied sources only. Lack of retrieved matches is not evidence of originality. Keep global novelty unassessed.
+3. Ask whether a proposed derived predictor is mathematically determined by comparator inputs. Added predictive information beyond those same inputs requires a distinct parameterization, interaction or estimator claim; generic complexity does not create new information.
+4. Separate design specificity, feasibility diagnostics, executed outcome tests and independent confirmation. Outcome-masked feasibility can support a design but cannot establish predictive/clinical/material utility or physical mechanism.
+5. Read control experiments precisely: destroying value-label correspondence under within-day reassignment does not by itself prove panel identity is the source of gain. Compare the actual operational control and its result.
+6. Preserve independent units: patient/site and informative clinical observation, versus cell/specimen/condition and shared cycling history. More rows or spectra do not imply more independent units. Censoring/source semantics and unavailable future measurements constrain resolvability.
+7. Missing literature or endpoint evidence remains unknown when genuinely unassessable. A plainly underspecified test is an observed weakness, not automatically unknown. Do not convert an engineering completion into scientific merit.
+8. Preserve contradictions and data-source provenance. Where a supplied digest is corrected by a hash-verified source erratum, use the correction; do not punish the hypothesis for a summarizer error.
+Apply the original eight dimensions and weights unchanged; do not target a desired score, order, trend, or amount of improvement.

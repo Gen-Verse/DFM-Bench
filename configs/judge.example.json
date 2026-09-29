@@ -1,0 +1,10 @@
+{
+  "model": "deepseek/deepseek-v4-flash",
+  "endpoint": "https://api.novita.ai/openai/v1/chat/completions",
+  "input_usd_per_m": null,
+  "output_usd_per_m": null,
+  "cache_read_usd_per_m": null,
+  "budget_usd": 5.0,
+  "request_cap": 500,
+  "max_output_tokens": 8192
+}

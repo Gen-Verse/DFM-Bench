@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dfm-bench.local/schemas/v1/episode",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "dataset": {
+      "type": "string"
+    },
+    "ordinal": {
+      "type": "integer"
+    },
+    "closed_at": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "selected_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "outcome": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "source_id",
+    "dataset",
+    "ordinal",
+    "closed_at",
+    "selected_id",
+    "outcome"
+  ],
+  "additionalProperties": false
+}

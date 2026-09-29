@@ -1,0 +1,130 @@
+{
+  "version": "DFM-Bench-v1-internal-preview",
+  "levels": [
+    "hypothesis",
+    "transition",
+    "trajectory",
+    "campaign",
+    "discovery"
+  ],
+  "hypothesis_dimensions": {
+    "importance": 20,
+    "novelty": 20,
+    "grounding": 15,
+    "falsifiability": 10,
+    "data_resolvability": 10,
+    "feasibility": 10,
+    "alternatives": 10,
+    "actionability": 5
+  },
+  "weight_status": "locked_internal_pilot_convention_not_validated",
+  "hypothesis_scale": [
+    1,
+    10
+  ],
+  "trajectory_weights": [
+    5,
+    30,
+    20,
+    20,
+    10,
+    10,
+    5
+  ],
+  "campaign_weights": [
+    25,
+    15,
+    15,
+    20,
+    10,
+    10,
+    5
+  ],
+  "expert_calibration_status": "pending",
+  "required_experts": 2,
+  "time_mode": "retrospective_final_snapshot",
+  "novelty_scope": "supplied_evidence_only",
+  "family_policy": "frozen prior proposed family mapping; no rescoring during consolidation",
+  "human_gate": "Registered independent expert judgments, adjudication and held-out acceptance are required",
+  "verbal_bands": {
+    "1-2": "Uninterpretable or severe unresolved scientific defects",
+    "3-4": "Material omissions or weak scientific warrant",
+    "5-6": "Coherent incremental proposal with bounded limitations",
+    "7-8": "Strong, grounded scientific opportunity with a discriminating test",
+    "9-10": "Exceptional scientifically consequential opportunity; proposal-stage evidence sufficient"
+  },
+  "score_meaning": "Scientific proposal merit conditional on supplied evidence, not truth or verified novelty",
+  "forbidden_claims": [
+    "expert_calibrated",
+    "online_as_of_progress",
+    "confirmed_discovery",
+    "system_superiority"
+  ],
+  "approval_status": "conditional_AI_role_review",
+  "human_calibration_status": "pending",
+  "domain_anchors": {
+    "clinical": {
+      "importance": "Clinical consequence of resolving the question, not model size, positive outcome or deployment readiness. Dataset-only feasibility can be useful without a high impact rating.",
+      "novelty": "Distinct inference relative to supplied closest studies; changes to safeguards, wording or file packaging are not novelty. External novelty stays unverified.",
+      "grounding": "Count direct, traceable evidence only to its supported claim. Literature supports motivation; audits support feasibility; neither supports an untested effect.",
+      "falsifiability": "Require identifiable contrast, meaningful threshold, independent units/time boundaries and supportive/adverse/inconclusive rules. Deterministic redundant contrasts are defects.",
+      "data_resolvability": "Assess whether configured data measure target constructs, time origin and follow-up; missing recurrence adjudication or unknown censoring dates can block the claim despite abundant rows.",
+      "feasibility": "Assess actual joint eligible support and recoverable artifacts, not marginal column availability or code existence.",
+      "alternatives": "Require controls that distinguish severity/treatment, measurement and ascertainment rivals; naming many rivals alone is insufficient.",
+      "actionability": "Concrete next scientific decision and required evidence; no requirement for immediate clinical use."
+    },
+    "battery": {
+      "importance": "1–2 no material uncertainty; 3–4 archive-specific narrow consequence; 5–6 useful diagnostic/inference question; 7–8 consequential measurement or transferable scientific decision with credible route; 9–10 exceptional domain consequence requiring explicit warrant. Do not award completed-execution points here.",
+      "novelty": "Score only the incremental question relative to supplied prior work. Routine split correction can improve validity without large novelty. No retrieval match is not evidence of global novelty.",
+      "grounding": "Separate directly measured capacity/EIS from derived impedance indices and fitted DMA labels. Contradictory data provenance is unknown until resolved, not a zero scientific score.",
+      "falsifiability": "A discriminating rival, matched information boundary and adverse/inconclusive interpretation earn credit. Many thresholds and controls alone do not.",
+      "data_resolvability": "Count independent physical specimens and condition groups; assess meaningful temporal/measurement semantics. Repeated cycles/frequencies are not new specimens.",
+      "feasibility": "Judge the proposed experiment at its stage. Archive parsing and rank checks establish feasibility only; computational expense or model simplicity is not scientific merit.",
+      "alternatives": "Compare explanations/representations that alter interpretation: measurement state, fixture identity, acquisition clock, continuous versus discrete state, fitted versus physical modes.",
+      "actionability": "Specify what observation would change a scientific or measurement decision; operational claims need acquisition cost/utility and intervention evidence."
+    }
+  },
+  "domain_review_recommendations": {
+    "clinical": {
+      "dimension_anchors": {
+        "importance": "Clinical consequence of resolving the question, not model size, positive outcome or deployment readiness. Dataset-only feasibility can be useful without a high impact rating.",
+        "novelty": "Distinct inference relative to supplied closest studies; changes to safeguards, wording or file packaging are not novelty. External novelty stays unverified.",
+        "grounding": "Count direct, traceable evidence only to its supported claim. Literature supports motivation; audits support feasibility; neither supports an untested effect.",
+        "falsifiability": "Require identifiable contrast, meaningful threshold, independent units/time boundaries and supportive/adverse/inconclusive rules. Deterministic redundant contrasts are defects.",
+        "data_resolvability": "Assess whether configured data measure target constructs, time origin and follow-up; missing recurrence adjudication or unknown censoring dates can block the claim despite abundant rows.",
+        "feasibility": "Assess actual joint eligible support and recoverable artifacts, not marginal column availability or code existence.",
+        "alternatives": "Require controls that distinguish severity/treatment, measurement and ascertainment rivals; naming many rivals alone is insufficient.",
+        "actionability": "Concrete next scientific decision and required evidence; no requirement for immediate clinical use."
+      },
+      "preserve_five_levels": true,
+      "weights": "Retain frozen trial weights for comparability; this review does not validate weights",
+      "discovery": "Separate observed evidence maturity, scientific status, consequence and independent confirmation. Do not make feasibility audits equivalent to confirmed findings. Freeze dedup before grading.",
+      "trajectory": "Freeze opportunity map; do not reward depth or lengthy safeguards; preserve null for unaudited budget",
+      "calibration": "Use paired same-packet disagreement as AI sensitivity analysis. A second AI role is not human reference truth, and score changes are not demonstrated calibration improvement."
+    },
+    "battery": {
+      "importance": "1–2 no material uncertainty; 3–4 archive-specific narrow consequence; 5–6 useful diagnostic/inference question; 7–8 consequential measurement or transferable scientific decision with credible route; 9–10 exceptional domain consequence requiring explicit warrant. Do not award completed-execution points here.",
+      "novelty": "Score only the incremental question relative to supplied prior work. Routine split correction can improve validity without large novelty. No retrieval match is not evidence of global novelty.",
+      "grounding": "Separate directly measured capacity/EIS from derived impedance indices and fitted DMA labels. Contradictory data provenance is unknown until resolved, not a zero scientific score.",
+      "falsifiability": "A discriminating rival, matched information boundary and adverse/inconclusive interpretation earn credit. Many thresholds and controls alone do not.",
+      "data_resolvability": "Count independent physical specimens and condition groups; assess meaningful temporal/measurement semantics. Repeated cycles/frequencies are not new specimens.",
+      "feasibility": "Judge the proposed experiment at its stage. Archive parsing and rank checks establish feasibility only; computational expense or model simplicity is not scientific merit.",
+      "alternatives": "Compare explanations/representations that alter interpretation: measurement state, fixture identity, acquisition clock, continuous versus discrete state, fitted versus physical modes.",
+      "actionability": "Specify what observation would change a scientific or measurement decision; operational claims need acquisition cost/utility and intervention evidence."
+    }
+  },
+  "frontier": "Campaign diagnostic derived from fixed hypothesis scores; never a sixth evaluation level",
+  "delivery_axis": [
+    "completion",
+    "compilation",
+    "readiness",
+    "execution"
+  ],
+  "discovery_policy": "Report family ledger, maturity, consequence and uncertainty; old narrow 6/0 gate is secondary, not discovery truth",
+  "release_claim": "Implementation and internal pilot release; no claim of completed human calibration, system superiority or verified discoveries",
+  "hypothesis_population_policy": "All 519 reviewed; mean Q uses known eligible generated candidates, excluding imported seeds. Unknown composites stay null.",
+  "frontier_policy": "F1 includes scoreable imported-seed baselines. F3 uses distinct frozen generated-contribution families only. Unknown Q remains unobserved; raw scores are not monotonically adjusted.",
+  "trajectory_progress_policy": "Legacy complete full-scope endpoint reviews are separate from 40 fixed-scope prefix reviews: first one edge plus 25/50/75/100% depth of one structurally longest path per dataset. Adjacent delta requires complete matching applicability.",
+  "calibration_evidence_scope": "Hypothesis development diagnostics against fresh-context AI references, plus enforced path-applicability consistency. Not validated calibration of all five levels.",
+  "spec_sha256": "41bb5dde3a6894313c7f3dbde3089a152828c2cc28111b8872e1787f3988a616"
+}

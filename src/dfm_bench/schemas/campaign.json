@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dfm-bench.local/schemas/v1/campaign",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "domain": {
+      "type": "string",
+      "enum": [
+        "clinical",
+        "battery"
+      ]
+    },
+    "hypothesis_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "decision_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "quiescent_unclosed",
+        "closed",
+        "unknown"
+      ]
+    },
+    "end_reason": {
+      "type": "string",
+      "enum": [
+        "operator_stopped",
+        "planned_completion",
+        "budget_exhaustion",
+        "early_termination",
+        "unknown"
+      ]
+    },
+    "review_coverage": {
+      "type": "string",
+      "enum": [
+        "not_reviewed",
+        "complete",
+        "partial",
+        "unscorable"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "domain",
+    "hypothesis_ids",
+    "decision_ids",
+    "status",
+    "end_reason",
+    "review_coverage"
+  ],
+  "additionalProperties": false
+}
