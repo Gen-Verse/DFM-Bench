@@ -98,12 +98,6 @@ The **battery-science extension** applies the same five evaluation levels to bat
 
 For installation and evaluation commands, supported run formats, and external-judge setup, see the [complete evaluation guide](docs/EVALUATION.md).
 
-## ⚠️ Limitations and Responsible Use
-
-The bundled v1 protocol remains an **AI-reviewed preview with human calibration pending**. Scores do not establish scientific truth, system superiority, or verified discoveries. They are retrospective assessments of a frozen final snapshot; a rising maximum score over episodes does not by itself prove learning.
-
-Review packets can contain sensitive free text. Automatic scans and neutral IDs are not full de-identification. Inspect packets before external review, keep snapshots and credentials outside Git, and use only data you are authorized to evaluate. The repository includes synthetic fixtures; private runs, patient data, review packets, and credentials are not distributed.
-
 ## 📝 Citation
 
 If you use DFM-Bench in your research, please cite the DiscoveryRSI paper:
