@@ -2,7 +2,7 @@
 
 See the [project overview](../README.md) for the benchmark introduction and synthetic quick start.
 
-Evaluate an existing EHR hypothesis-agent run without modifying or restarting the agent. Clone this repository into **any directory**, install it in its own environment, and point it at your run’s `state.sqlite`. No dependency on the original author's checkout, historical pilot outputs, or machine-specific credentials.
+Evaluate an existing life-science or battery-science hypothesis-agent run without modifying or restarting the agent. Clone this repository into **any directory**, install it in its own environment, and point it at your run’s `state.sqlite`. No dependency on the original author's checkout, historical pilot outputs, or machine-specific credentials.
 
 The benchmark reports five separate scientific levels: **Hypothesis, Transition, Trajectory, Campaign, Discovery**. It also reports completion, compilation and readiness separately. This is an **internal AI-reviewed preview**; human calibration is pending, and the scores do not establish scientific truth or verified discoveries.
 
@@ -50,7 +50,7 @@ The importer opens SQLite read-only and captures a consistent view including com
 
 **Keep the original run files in place.** Registered support files are validated against their recorded paths and hashes. Moving only `state.sqlite` loses attachments. Attachments outside the run, symlinks, oversized files, suspected secrets, and missing/mismatched files are explicitly unavailable; dataset bindings are not copied. The default attachment cap is 1 MiB; raise it explicitly with `--max-artifact-bytes` only if appropriate.
 
-Supported schemas are the EHR thin pairwise schema (`ehr-thin-pairwise-v1`) and its battery counterpart. Required tables: `meta`, `candidates`, `episodes`, `jobs`, `attempts`, `actors`; required columns are defined in [`adapters.py`](../src/dfm_bench/adapters.py). Extra columns are tolerated. `Unsupported schema` means a different agent generation needs an adapter; renaming the file or pointing at a different SQLite file will not convert it.
+Use `--domain clinical` for supported life-science runs and `--domain battery` for the battery-science extension. The current importer accepts the EHR thin pairwise schema (`ehr-thin-pairwise-v1`) and the battery discovery pairwise schema (`battery-discovery-pairwise-v1`). Required tables: `meta`, `candidates`, `episodes`, `jobs`, `attempts`, `actors`; required columns are defined in [`adapters.py`](../src/dfm_bench/adapters.py). Extra columns are tolerated. `Unsupported schema` means a different agent generation needs an adapter; renaming the file or pointing at a different SQLite file will not convert it.
 
 ## 3. Prepare the scientific review offline
 

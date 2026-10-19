@@ -15,7 +15,7 @@
 
 ## 🔬 A benchmark for cumulative research progress
 
-**DFM-Bench** evaluates how scientific research develops across an agent run. Introduced as part of [DiscoveryRSI](https://github.com/Gen-Verse/DiscoveryRSI), it evaluates individual hypotheses, revisions against their actual predecessors, ordered development paths, complete research campaigns, and deduplicated scientific contributions.
+**DFM-Bench** evaluates cumulative progress in **life-science research**, with a **battery-science extension**. Introduced as part of [DiscoveryRSI](https://github.com/Gen-Verse/DiscoveryRSI), it evaluates individual hypotheses, revisions against their actual predecessors, ordered development paths, complete research campaigns, and deduplicated scientific contributions.
 
 The benchmark reports **Hypothesis, Transition, Trajectory, Campaign, and Discovery** separately, alongside an independent delivery report for completion, compilation, and readiness. A strong proposal, a productive research process, and a compiled experiment each provide different evidence about research progress.
 
@@ -90,17 +90,13 @@ python -m unittest discover -s tests -v
 
 Completion, compilation, and readiness are reported on a **separate delivery axis**. Campaign scores are not averages of hypothesis scores, and proposed contribution families are not confirmed discoveries. See the [evaluation guide](docs/EVALUATION.md#score-interpretation) for weights, coverage rules, and scope.
 
-## 🧠 Evaluate Your Own Research Run
+## 🧪 Life Science and Battery Extension
 
-Point the importer at a supported run directory containing `state.sqlite`, then prepare its scientific review. The supported adapters cover the **EHR thin pairwise schema** (`ehr-thin-pairwise-v1`) and its **battery counterpart**; other run schemas need an adapter.
+**Life science** is the primary research setting, spanning clinical and population health, therapeutic-target prioritization, disease mechanisms, and population multi-omics. DFM-Bench evaluates how hypotheses in these areas develop through evidence, critique, revision, and synthesis across a research campaign.
 
-The workflow has three stages:
+The **battery-science extension** applies the same five evaluation levels to battery research, with domain-specific rubrics covering electrochemistry, materials degradation, sensing, and state estimation. The shared evaluation structure supports examining cumulative research progress in both settings, while each domain retains its own scientific criteria.
 
-1. **Import and verify offline.** Freeze a read-only snapshot and inspect episode counts, graph structure, available artifacts, and delivery status.
-2. **Prepare and inspect offline.** Freeze the protocol and review packet, then inspect the exact content eligible for external judging.
-3. **Review and report.** Configure an independent OpenAI-compatible Chat Completions judge, set pricing and budget limits, and explicitly approve the inspected packet hash. Only `review` makes paid external calls.
-
-Follow the [complete evaluation guide](docs/EVALUATION.md) for commands, judge configuration, private key storage, interruption recovery, and output files. Keep the original run files in place so registered attachments can be validated.
+For installation and evaluation commands, supported run formats, and external-judge setup, see the [complete evaluation guide](docs/EVALUATION.md).
 
 ## ⚠️ Limitations and Responsible Use
 
