@@ -1,172 +1,128 @@
-# DFM-Bench
+<div align="center">
 
-Evaluate an existing EHR hypothesis-agent run without modifying or restarting the agent. Clone this repository into **any directory**, install it in its own environment, and point it at your run’s `state.sqlite`. No dependency on the original author's checkout, historical pilot outputs, or machine-specific credentials.
+<h1>DFM-Bench</h1>
 
-The benchmark reports five separate scientific levels: **Hypothesis, Transition, Trajectory, Campaign, Discovery**. It also reports completion, compilation and readiness separately. This is an **internal AI-reviewed preview**; human calibration is pending, and the scores do not establish scientific truth or verified discoveries.
+<p><strong>Evaluating cumulative scientific research progress</strong></p>
 
-## 1. Clone and install
+<p>
+  <a href="https://arxiv.org/abs/2610.23839"><img src="https://img.shields.io/badge/arXiv-2610.23839-B31B1B?logo=arxiv&logoColor=white" alt="DiscoveryRSI on arXiv"/></a>
+  <a href="https://github.com/Gen-Verse/DiscoveryRSI"><img src="https://img.shields.io/badge/DiscoveryRSI-GitHub-181717?logo=github&logoColor=white" alt="DiscoveryRSI on GitHub"/></a>
+  <a href="https://github.com/Gen-Verse/DFM-Bench/actions/workflows/tests.yml"><img src="https://github.com/Gen-Verse/DFM-Bench/actions/workflows/tests.yml/badge.svg" alt="Deterministic tests"/></a>
+  <img src="https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white" alt="Python 3.11 or newer"/>
+</p>
 
-Requirements: Linux (including the Phai Labs machine) or macOS, Python **3.11+**, Git, and read access to the agent run directory. No GPU, model weights, agent installation, or patient-data download is required. Installation needs access to PyPI for the build tools; the installed evaluator uses the Python standard library only.
+</div>
+
+## 🔬 A benchmark for cumulative research progress
+
+**DFM-Bench** evaluates how scientific research develops across an agent run. Introduced as part of [DiscoveryRSI](https://github.com/Gen-Verse/DiscoveryRSI), it evaluates individual hypotheses, revisions against their actual predecessors, ordered development paths, complete research campaigns, and deduplicated scientific contributions.
+
+The benchmark reports **Hypothesis, Transition, Trajectory, Campaign, and Discovery** separately, alongside an independent delivery report for completion, compilation, and readiness. A strong proposal, a productive research process, and a compiled experiment each provide different evidence about research progress.
+
+## 🧭 DFM-Bench at a glance
+
+**1. Five levels of scientific evaluation.** Assess proposal quality, parent–child progress, development paths, whole research graphs, and contribution families. There is no single total combining the five levels; missing evidence remains unknown.
+
+**2. Read-only evaluation of existing runs.** Import a consistent snapshot of a supported agent run without modifying its database or restarting the agent. The portable evaluator runs on Linux and macOS with Python 3.11+ and standard-library runtime dependencies.
+
+**3. Frozen, inspectable reviews.** Preserve the snapshot identity, domain rubrics, protocol, review packet, evidence references, and cost ledger. Prepare and inspect packets offline, then explicitly submit an approved packet to an independent external judge. Reviews support cached resume and partial reports.
+
+## 📦 Resources
+
+| **Type** | **Name** | **Link** |
+| --- | --- | --- |
+| 📄 Paper | **DiscoveryRSI** | [arXiv:2610.23839](https://arxiv.org/abs/2610.23839) |
+| 🧠 Framework | **DiscoveryRSI** | [GitHub](https://github.com/Gen-Verse/DiscoveryRSI) |
+| 📖 Guide | **Evaluate your own agent run** | [Evaluation guide](docs/EVALUATION.md) |
+| 📐 Protocol | **Frozen v1 scoring protocol** | [Protocol JSON](src/dfm_bench/protocols/PROTOCOL-V1.json) |
+| 🧪 Example | **Synthetic agent run** | [Demo fixture](scripts/create_demo_run.py) |
+
+## 🚀 Quick Start
+
+Clone the repository and install the evaluator:
 
 ```bash
-# Run from your own working directory; do not clone over an existing checkout.
-git clone https://github.com/JianyuanZhong/dfm-bench.git
-cd dfm-bench
+git clone https://github.com/Gen-Verse/DFM-Bench.git
+cd DFM-Bench
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install --upgrade pip
 python -m pip install .
-dfm-bench --help
-dfm-bench-evaluate --help
 ```
 
-This is a private repository: authenticate with a GitHub account that has repository access, or use your configured GitHub SSH URL. Clone location and source-run location are independent. Once installed, both commands work from any directory while this environment is active.
-
-## 2. Point it at your completed episodes
-
-For a run of approximately 20 episodes, use the run directory containing `state.sqlite`, not the agent project root or an individual compiled task package. The adapter checks the database schema and includes every recorded episode/candidate in that run; it does not assume there are exactly 20 episodes. A row created but never started is reported separately.
-
-```bash
-# EDIT these two paths. They are your paths, not the author's historical paths.
-RUN_DIR="/absolute/path/to/your/agent/runs/your-run"
-EVAL_DIR="/absolute/path/to/your/dfm-results/run-20-episodes"
-umask 077
-mkdir -p "$EVAL_DIR"
-
-dfm-bench import-run \
-  --domain clinical \
-  --source "$RUN_DIR/state.sqlite" \
-  --output "$EVAL_DIR/snapshot"
-
-dfm-bench verify "$EVAL_DIR/snapshot"
-dfm-bench report "$EVAL_DIR/snapshot"
-```
-
-**These commands are offline and free.** Read `$EVAL_DIR/snapshot/report.md` to check episode counts, source status, graph structure, artifact availability, compilation and readiness. This operational report **does not score scientific quality**. Continue below for DFM scientific evaluation.
-
-The importer opens SQLite read-only and captures a consistent view including committed WAL data. It never migrates or writes the source database. An existing snapshot directory is rejected; reuse it with `verify`/`report`, or choose a new output directory. Keep evaluation outputs outside the agent run directory. An actively changing run is supported as a point-in-time snapshot, but a completed/quiescent run gives a clearer final assessment; do not stop someone else's run merely to evaluate it.
-
-**Keep the original run files in place.** Registered support files are validated against their recorded paths and hashes. Moving only `state.sqlite` loses attachments. Attachments outside the run, symlinks, oversized files, suspected secrets, and missing/mismatched files are explicitly unavailable; dataset bindings are not copied. The default attachment cap is 1 MiB; raise it explicitly with `--max-artifact-bytes` only if appropriate.
-
-Supported schemas are the EHR thin pairwise schema (`ehr-thin-pairwise-v1`) and its battery counterpart. Required tables: `meta`, `candidates`, `episodes`, `jobs`, `attempts`, `actors`; required columns are defined in [`adapters.py`](src/dfm_bench/adapters.py). Extra columns are tolerated. `Unsupported schema` means a different agent generation needs an adapter; renaming the file or pointing at a different SQLite file will not convert it.
-
-## 3. Prepare the scientific review offline
-
-```bash
-dfm-bench-evaluate prepare \
-  --snapshot "$EVAL_DIR/snapshot" \
-  --output "$EVAL_DIR/review"
-```
-
-This freezes the source snapshot identity, v1 protocol, original domain rubrics, interpretation rules, deterministic path selection, and exact review packet hash. It replaces candidate IDs with neutral IDs and removes recognizable private paths/secrets. It makes **no API calls**.
-
-Inspect these local files:
-
-- `review/privacy-audit.json`: coverage and the `packet_hash` you will use below.
-- `review/packet.json`: the **exact scientific content** eligible to be sent to the external judge.
-- `review/plan.json`: frozen protocol and effective population/scope.
-
-Review packets and snapshots remain private. Heuristic scanning is **not full de-identification**: proposals and registered support attachments may contain sensitive text even when raw dataset bindings and actor traces are excluded. Inspect before sending. If content must change, prepare a separate sanitized source export/snapshot and a new review directory; don't edit a frozen packet in place.
-
-Optionally supply `--opportunity-map /path/to/opportunities.json` to `prepare`. This should describe the starting research opportunities and evidence-backed constraints before seeing scores. An optional `resource_budget` field can record the actual episode/time/token budget and its provenance. Without it, unsupported opportunity/budget dimensions may remain unknown. This is preferable to inventing a campaign score.
-
-## 4. Configure and explicitly run the external judge
-
-The judge is an independent **OpenAI-compatible Chat Completions** service supporting JSON responses, `temperature`, `max_tokens`, billable token usage, and an exact matching returned model ID. The supplied example names the provider/model used in the original pilot; you may choose another suitable external judge. It is not the EHR agent under evaluation.
-
-```bash
-# From the cloned repository; outputs and credentials stay outside Git.
-cp configs/judge.example.json "$EVAL_DIR/judge.json"
-```
-
-Edit `$EVAL_DIR/judge.json`:
-
-| Field | What to enter |
-|---|---|
-| `model` | Your external judge's exact model ID |
-| `endpoint` | Full HTTPS Chat Completions URL, ending in `/chat/completions` |
-| `input_usd_per_m` | Current USD per million input tokens |
-| `output_usd_per_m` | Current USD per million output tokens |
-| `cache_read_usd_per_m` | Current cache-read rate; use the input rate if no verified discount |
-| `budget_usd` | Total allowed cost/reservations for this review directory; example: 5 |
-| `request_cap` | Maximum HTTP attempts including retries; example: 500 |
-| `max_output_tokens` | Output-token ceiling per call; example: 8192 |
-
-**Pricing starts as `null` deliberately:** enter your provider's current rates before review. The evaluator rejects missing/invalid prices before sending anything. The budget is a local estimate/reservation bound using those rates, not a guarantee about a provider invoice. There are at most two attempts per exact request; missing usage retains the reservation.
-
-Store your own API key in a file outside the repository and the review directory, with permission `600`. Do not put a key in the JSON config or command line. For example, create a private file with your editor, then:
-
-```bash
-KEY_FILE="$HOME/.config/dfm-bench/judge.key"
-chmod 600 "$KEY_FILE"
-
-# After inspecting packet.json, copy its exact hash from privacy-audit.json.
-PACKET_HASH="paste-the-64-character-packet_hash-here"
-
-dfm-bench-evaluate review \
-  --output "$EVAL_DIR/review" \
-  --config "$EVAL_DIR/judge.json" \
-  --key-file "$KEY_FILE" \
-  --approve-packet-sha256 "$PACKET_HASH"
-```
-
-**Only `review` makes paid external calls.** The hash flag records your choice to send that inspected packet. No agent episodes, training, scientific experiments or data production are launched by the evaluator.
-
-The runner reviews all registered hypotheses (seeds separately), every actual parent–child edge, one deterministic longest path per terminal candidate, the full campaign, and a deduplicated contribution ledger per dataset. It is serial and resumable, with cached accepted judgments and a shared cost ledger. Large campaigns require a judge context window that fits the whole campaign; no silent truncation or score-based subsampling occurs. A context rejection stops with preserved partial output.
-
-If interrupted, rerun **the identical `review` command**. Accepted stages are reused. Interrupted requests retain conservative cost reservations. Provider errors, exhausted budgets, and validation failures stop with partial results and exit code 2. Exact requests stop retrying after two attempts; do not delete ledger entries to bypass the budget/retry limits. A different model/configuration/budget or changed evaluator code requires a new review directory (you can reuse the same snapshot).
-
-## 5. Read or rebuild the results
-
-```bash
-# Offline; also works before/during an incomplete evaluation.
-dfm-bench-evaluate report --output "$EVAL_DIR/review"
-```
-
-| File | Contents |
-|---|---|
-| `review/REPORT.md` | Readable scorecard, coverage and limitations |
-| `review/summary.json` | Means, coverage denominators, edge-by-edge ΔH, path/campaign scores, family counts and cost |
-| `review/results.json` | Every scientific rating, evidence reference, rationale and contribution family |
-| `review/delivery.json` | Separate episode, compilation and readiness statistics |
-| `review/plan.json` | Protocol, scope, snapshot identity and implementation fingerprint |
-| `review/judge/ledger.json` | Requests, usage, failures and cost/reservations |
-
-All these outputs are private by default. Share an inspected report with your collaborator; do not commit snapshots, request bodies, packets, raw traces, credentials or private task packages.
-
-## Score interpretation
-
-| Level | Measurement |
-|---|---|
-| Hypothesis | Weighted Q on 1–10: importance 20, novelty 20, grounding 15, falsifiability 10, data resolvability 10, feasibility 10, alternatives 10, actionability 5. Any unknown dimension withholds Q. Generated-candidate mean excludes imported seeds. |
-| Transition | Substantive progress / necessary repair / marginal repetition / insufficient evidence. Numerical ΔH is child Q minus parent Q only when both are known. Each crossover parent remains a separate edge. |
-| Trajectory | Original L1–L7 rubric, weights 5/30/20/20/10/10/5, 0–4 ratings. Full-scope complete composite is 0–100; missing dimensions withhold it. Single-node paths are unscorable. |
-| Campaign | Independent full-DAG T1–T7 rubric, weights 25/15/15/20/10/10/5. A complete score is 0–100, **not an average of node scores**. |
-| Discovery | Contribution families grouped by question within each dataset, with maturity, disposition, importance and uncertainty. Proposed families are not confirmed discoveries. |
-
-There is no single total combining the five levels. Completion/readiness is a separate delivery axis. Scores are retrospective judgments of a final snapshot, not evidence available at each historical episode. A maximum score increasing over episodes does not prove learning. Unknowns are not zeros; review completion is not the same as having every composite available.
-
-The portable runner preserves the v1 scoring dimensions and original domain rubric bytes. Its explicit scope differs from historical pilot analysis: all seven trajectory/campaign dimensions remain applicable (missing evidence stays unknown); there is no root-specific applicability adjudication, no historical prefix-ΔT analysis, and families are freshly grouped within one run. The archived protocol includes old population descriptions; the effective scope in `plan.json` supersedes those descriptions for this run. Cross-run discovery comparisons require a joint blinded family adjudication, not subtraction of separately deduplicated family counts.
-
-## Free smoke test after cloning
-
-This creates only a tiny synthetic fixture and makes no model calls:
+Run the synthetic example. This creates a small fixture, imports a snapshot, and prepares an offline review without credentials, patient data, or model calls:
 
 ```bash
 SMOKE_DIR="$(mktemp -d)"
 python scripts/create_demo_run.py --output "$SMOKE_DIR/run"
-dfm-bench import-run --domain clinical --source "$SMOKE_DIR/run" --output "$SMOKE_DIR/snapshot"
+
+dfm-bench import-run \
+  --domain clinical \
+  --source "$SMOKE_DIR/run" \
+  --output "$SMOKE_DIR/snapshot"
+
 dfm-bench verify "$SMOKE_DIR/snapshot"
 dfm-bench report "$SMOKE_DIR/snapshot"
-dfm-bench-evaluate prepare --snapshot "$SMOKE_DIR/snapshot" --output "$SMOKE_DIR/review"
+
+dfm-bench-evaluate prepare \
+  --snapshot "$SMOKE_DIR/snapshot" \
+  --output "$SMOKE_DIR/review"
+
 dfm-bench-evaluate report --output "$SMOKE_DIR/review"
+```
+
+Read `$SMOKE_DIR/snapshot/report.md` for the operational report and `$SMOKE_DIR/review/REPORT.md` for review coverage. The review intentionally remains **partial** with no scientific scores until a judge is called.
+
+Run the deterministic test suite:
+
+```bash
 python -m unittest discover -s tests -v
 ```
 
-The smoke report intentionally says `partial` with no scientific scores because no judge was called. The test suite separately runs all five levels through a deterministic fake judge, checks resume and partial failures, source immutability, budget limits, custom judge configuration, packet integrity, WAL snapshots and missing-evidence behavior. Tests use no real credentials or paid APIs.
+## 📊 Five Evaluation Levels
 
-## Packaging and provenance
+| **Level** | **What it evaluates** | **Reported result** |
+| --- | --- | --- |
+| **Hypothesis** | Importance, novelty, grounding, falsifiability, data resolvability, feasibility, alternatives, and actionability | Weighted quality score on 1–10 when all dimensions are known; imported seeds reported separately |
+| **Transition** | Each actual parent–child revision, including each parent of a crossover | Substantive progress, necessary repair, marginal repetition, or insufficient evidence; ΔH when both quality scores are known |
+| **Trajectory** | One deterministic longest development path per terminal candidate | Seven-dimension path rubric; complete composite on 0–100, with single-node paths unscorable |
+| **Campaign** | The complete research graph and its development process | Independent seven-dimension campaign rubric; complete composite on 0–100 |
+| **Discovery** | Contributions grouped by research question within each dataset | Deduplicated families with maturity, disposition, importance, and uncertainty |
 
-The wheel bundles schemas, clinical/battery rubrics, [`PROTOCOL-V1.json`](src/dfm_bench/protocols/PROTOCOL-V1.json), and [v1 interpretation rules](src/dfm_bench/protocols/interpretation-v1.txt). The archived source hashes are in [`docs/SOURCE-PROVENANCE.json`](docs/SOURCE-PROVENANCE.json). [`docs/RELEASE.md`](docs/RELEASE.md) describes the portable release changes.
+Completion, compilation, and readiness are reported on a **separate delivery axis**. Campaign scores are not averages of hypothesis scores, and proposed contribution families are not confirmed discoveries. See the [evaluation guide](docs/EVALUATION.md#score-interpretation) for weights, coverage rules, and scope.
 
-Historical `pilot`, `five_level` and `calibration_pilot` modules are retained as tested implementation dependencies and archival code. Their old standalone entry points are disabled in this distribution. Use **`dfm-bench` and `dfm-bench-evaluate`** above for new runs. The separate `calibration-import`, `calibration-report`, and `frontier` commands remain available for advanced workflows; they do not invent human expert labels or turn a frontier into a sixth evaluation level.
+## 🧠 Evaluate Your Own Research Run
+
+Point the importer at a supported run directory containing `state.sqlite`, then prepare its scientific review. The supported adapters cover the **EHR thin pairwise schema** (`ehr-thin-pairwise-v1`) and its **battery counterpart**; other run schemas need an adapter.
+
+The workflow has three stages:
+
+1. **Import and verify offline.** Freeze a read-only snapshot and inspect episode counts, graph structure, available artifacts, and delivery status.
+2. **Prepare and inspect offline.** Freeze the protocol and review packet, then inspect the exact content eligible for external judging.
+3. **Review and report.** Configure an independent OpenAI-compatible Chat Completions judge, set pricing and budget limits, and explicitly approve the inspected packet hash. Only `review` makes paid external calls.
+
+Follow the [complete evaluation guide](docs/EVALUATION.md) for commands, judge configuration, private key storage, interruption recovery, and output files. Keep the original run files in place so registered attachments can be validated.
+
+## ⚠️ Limitations and Responsible Use
+
+The bundled v1 protocol remains an **AI-reviewed preview with human calibration pending**. Scores do not establish scientific truth, system superiority, or verified discoveries. They are retrospective assessments of a frozen final snapshot; a rising maximum score over episodes does not by itself prove learning.
+
+Review packets can contain sensitive free text. Automatic scans and neutral IDs are not full de-identification. Inspect packets before external review, keep snapshots and credentials outside Git, and use only data you are authorized to evaluate. The repository includes synthetic fixtures; private runs, patient data, review packets, and credentials are not distributed.
+
+## 📝 Citation
+
+If you use DFM-Bench in your research, please cite the DiscoveryRSI paper:
+
+```bibtex
+@article{zhong2026discoveryrsi,
+  title={DiscoveryRSI: Recursively Learning to Discover Valuable Hypotheses},
+  author={Zhong, Jianyuan and Wu, Chenwei and Yu, Zhaochen and Jiang, Xixian and Li, Xuewei and Xiao, Hao and Dai, Xilin and Wang, Junyang and Zou, Jiaru and Cui, Zhiqing and Zheng, Boyuan and Xiong, Jing and Zhang, Zhen and Gao, Qiang and Morley, Michael and Nakayama, Luis and Xu, Qiang and Shen, Liyue and Gui, Tao and Celi, Leo Anthony and Zou, James and Yin, Zhenfei and Wu, Yingcheng and Yang, Ling},
+  journal={arXiv preprint arXiv:2610.23839},
+  year={2026}
+}
+```
+
+## 📚 Documentation and Provenance
+
+The [evaluation guide](docs/EVALUATION.md) contains the full operating procedure. The [release notes](docs/RELEASE.md) describe the portable runner, and [source provenance](docs/SOURCE-PROVENANCE.json) records archived source hashes. Domain rubrics and protocol files retain their original bytes.
+
+Historical pilot documents are retained for context: [five-level protocol archive](docs/FIVE-LEVEL-PROTOCOL.md) and [M1–M3 acceptance archive](docs/M1-M3-ACCEPTANCE.md). Their historical populations and paths do not replace the portable runner's effective scope in `plan.json`.
